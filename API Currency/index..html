@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Currency Conversion</title>
+</head>
+<body>
+<div class="price">
+  <span class="amount"></span> USD
+  <div class="egy">Price in EGP: <span></span></div>
+  <div class="sar">Price in SAR: <span></span></div>
+</div>
+
+<script>
+  fetch("https://api.currencyfreaks.com/v2.0/rates/latest?apikey=face1d66e6914f60b40dffb40b27a0b5")
+    .then((response) => {
+      // Parse JSON from the API response
+      return response.json();
+    })
+    .then((data) => {
+      // Access elements in the DOM
+      // let amount = parseFloat(document.querySelector(".amount").innerText); // Get and parse the amount
+      let enterPrice=prompt("Enter your price",1);
+
+      let egySpan = document.querySelector(".egy span");
+      let sarSpan = document.querySelector(".sar span");
+
+      // Update EGP and SAR prices based on API rates
+      egySpan.innerHTML = (data.rates["EGP"] * enterPrice).toFixed(2); // Convert to EGP
+      sarSpan.innerHTML = (data.rates["SAR"] * enterPrice).toFixed(2); // Convert to SAR
+    })
+    .catch((error) => {
+      console.error("Error fetching currency rates:", error);
+    });
+</script>
+</body>
+</html>
